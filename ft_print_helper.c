@@ -6,7 +6,7 @@
 /*   By: akenji-a <akenji-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 17:41:41 by akenji-a          #+#    #+#             */
-/*   Updated: 2022/05/15 18:22:22 by akenji-a         ###   ########.fr       */
+/*   Updated: 2022/05/16 13:04:32 by akenji-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	ft_print_s(char *str)
 {
 	int	len;
 
+	if (str == NULL)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (6);
+	}
 	len = 0;
 	len = ft_strlen(str);
 	ft_putstr_fd(str, 1);
@@ -55,16 +60,18 @@ int	ft_print_pxu(unsigned long long int nbr, const char *str)
 	len = 0;
 	if (*str == 'p')
 	{
+		if (nbr == 0)
+			return (write(1, "(nil)", 5));
 		ft_putstr_fd("0x", 1);
 		nbr_pxu = ft_uuitoa(nbr, HEX_LOWER);
 		len = 2;
 	}
-	if (*str == 'x')
-		nbr_pxu = ft_uuitoa(nbr, HEX_LOWER);
-	if (*str == 'X')
-		nbr_pxu = ft_uuitoa(nbr, HEX_UPPER);
-	if (*str == 'u')
-		nbr_pxu = ft_uuitoa(nbr, DECIMAL);
+	else if (*str == 'x')
+		nbr_pxu = ft_uuitoa((unsigned int) nbr, HEX_LOWER);
+	else if (*str == 'X')
+		nbr_pxu = ft_uuitoa((unsigned int) nbr, HEX_UPPER);
+	else if (*str == 'u')
+		nbr_pxu = ft_uuitoa((unsigned int) nbr, DECIMAL);
 	len = len + ft_strlen(nbr_pxu);
 	ft_putstr_fd(nbr_pxu, 1);
 	free(nbr_pxu);
